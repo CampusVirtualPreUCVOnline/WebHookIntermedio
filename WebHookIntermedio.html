@@ -5,39 +5,27 @@
 </head>
 <body>
     <h1>Enviar datos al Webhook</h1>
-    <form id="webhookForm">
+    <form id="webhookForm" action="" method="get">
         <label for="nombre">Nombre:</label><br>
         <input type="text" id="nombre" name="nombre"><br><br>
         <label for="correo">Correo:</label><br>
         <input type="text" id="correo" name="correo"><br><br>
         <label for="mensaje">Mensaje:</label><br>
         <input type="text" id="mensaje" name="mensaje"><br><br>
-        <input type="submit" value="Enviar">
+        <input type="button" value="Enviar" onclick="enviarDatos()">
     </form>
 
     <script>
-        document.getElementById('webhookForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
+        function enviarDatos() {
             var nombre = document.getElementById('nombre').value;
             var correo = document.getElementById('correo').value;
             var mensaje = document.getElementById('mensaje').value;
 
-            fetch('https://script.google.com/macros/s/AKfycbyfqax9nCyOZfAqtHbOBv0mle1dDZII1f4fHFP4NM1HXFJiFHKF2pywkWYurr4KzFLX/exec', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({nombre: nombre, correo: correo, mensaje: mensaje}),
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Datos enviados con éxito');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        });
+            var url = 'https://script.google.com/macros/s/AKfycbyfqax9nCyOZfAqtHbOBv0mle1dDZII1f4fHFP4NM1HXFJiFHKF2pywkWYurr4KzFLX/exec?nombre=' + encodeURIComponent(nombre) + '&correo=' + encodeURIComponent(correo) + '&mensaje=' + encodeURIComponent(mensaje);
+
+            // Redirigir a la URL construida
+            window.location.href = url;
+        }
     </script>
 </body>
 </html>
